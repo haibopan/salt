@@ -1,0 +1,27 @@
+/opt/logs/nginx:
+  file.directory:
+    - user: root
+/opt/logs/nginx/access.log:
+  file.managed:
+    - user: root
+/opt/logs/nginx/error.log:
+  file.managed:
+    - user: root
+
+nginx:
+  pkg:
+    - installed
+  service.running:
+    - enable: True
+    - reload: True
+    - watch:
+      - file: /etc/nginx/nginx.conf
+      - pkg: nginx
+/etc/nginx/nginx.conf:
+  file.managed:
+    - source: salt://files/nginx/nginx.conf
+    - user: root
+    - mode: 644
+    - template: jinja
+    - require:
+      - pkg: nginx
