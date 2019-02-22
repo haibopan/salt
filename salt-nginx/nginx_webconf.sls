@@ -7,6 +7,10 @@ include:
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
+    - defaults:
+      HOSTNAME: www.test.com
+      PORT: 80
   service.running:
     - name: nginx
     - enable: True
